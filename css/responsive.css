@@ -1,0 +1,44 @@
+/* =============================================================================
+   LE LABO · css/responsive.css — 뷰포트 분기 (1440 / 1024 / 768 / 480)
+   기존 반응형 규칙을 먼저 로드한 뒤, site-* 보정만 추가합니다.
+   ============================================================================= */
+
+@import url("../styles/responsive.css");
+
+@media (max-width: 1440px) {
+  .site-group {
+    gap: clamp(16px, 2.5vw, 32px);
+  }
+}
+
+@media (max-width: 1024px) {
+  .site-section > .container > .content {
+    gap: clamp(24px, 4vw, 40px);
+  }
+}
+
+@media (max-width: 768px) {
+  .site-group {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .site-image-box,
+  .site-text-box {
+    flex: 1 1 100%;
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .site-button-box {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .site-button-box > .btn,
+  .site-button-box > a.btn {
+    width: 100%;
+    justify-content: center;
+  }
+}

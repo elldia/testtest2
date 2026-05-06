@@ -1,0 +1,138 @@
+/* =============================================================================
+   LE LABO · css/common.css — 메인 진입 레이어 (서브페이지 확장용)
+   - 디자인 토큰·셸·타이포 기본
+   - 기존 컴포넌트 스타일은 styles/ 쪽 시트를 @import (점진 이관 시 여기로 합치기)
+   ============================================================================= */
+
+@import url("../styles/reset.css");
+@import url("../styles/common.css");
+@import url("../styles/page-shell.css");
+@import url("../styles/swiper-bundle.css");
+@import url("../styles/index.css");
+@import url("../styles/scent-depth.css");
+@import url("../styles/card-system.css");
+
+/* --- Shell (1920 프레임 / 1440 콘텐츠) ------------------------------------ */
+#wrap {
+  max-width: 1920px;
+  margin-inline: auto;
+}
+
+.site-shell .container,
+#wrap .container {
+  max-width: 1440px;
+  margin-inline: auto;
+}
+
+/* --- Section 시스템: section > .container > .content ---------------------- */
+.site-section > .container > .content {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(28px, 4vw, 48px);
+  width: 100%;
+  min-width: 0;
+}
+
+/* group: image_box / text_box / button_box 를 묶는 flex 행 (기본 가로) */
+.site-group {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: clamp(20px, 3vw, 40px);
+  width: 100%;
+  min-width: 0;
+}
+
+.site-group--stack {
+  flex-direction: column;
+}
+
+.site-image-box {
+  flex: 0 1 auto;
+  min-width: 0;
+}
+
+.site-text-box {
+  flex: 1 1 min(100%, 28rem);
+  min-width: 0;
+}
+
+.site-button-box {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-12, 12px);
+  align-items: center;
+}
+
+/* 헤더 스택: styles/common.css 의 .header.site-header 참고 (sticky 덮어쓰기 금지) */
+
+/* 선택: 섹션에 data-scroll-reveal 주면 animation.js가 .is-revealed 부여 */
+[data-scroll-reveal] {
+  opacity: 1;
+  transform: translateY(14px);
+  transition: transform 0.65s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+[data-scroll-reveal].is-revealed {
+  transform: none;
+}
+
+/* 블록 단위 스태거(자식 opacity는 부모와 독립 — reduced-motion 대응 용이) */
+[data-scroll-reveal] > .container > .content > *,
+[data-scroll-reveal].hero-section > * {
+  opacity: 0;
+  transform: translateY(12px);
+  transition:
+    opacity 0.58s cubic-bezier(0.2, 0.8, 0.2, 1) var(--reveal-d, 0ms),
+    transform 0.58s cubic-bezier(0.2, 0.8, 0.2, 1) var(--reveal-d, 0ms);
+}
+
+[data-scroll-reveal].is-revealed > .container > .content > *,
+[data-scroll-reveal].hero-section.is-revealed > * {
+  opacity: 1;
+  transform: none;
+}
+
+[data-scroll-reveal]:not(.is-revealed) > .container > .content,
+[data-scroll-reveal]:not(.is-revealed).hero-section > * {
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-scroll-reveal] {
+    transform: none;
+    transition: none;
+  }
+
+  [data-scroll-reveal] > .container > .content > *,
+  [data-scroll-reveal].hero-section > * {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  [data-scroll-reveal]:not(.is-revealed) > .container > .content,
+  [data-scroll-reveal]:not(.is-revealed).hero-section > * {
+    pointer-events: auto;
+  }
+}
+
+/* 스크립트 미지원(또는 완전 비활성): 리빌 없이도 본문·클릭 가능 */
+@media (scripting: none) {
+  [data-scroll-reveal] {
+    transform: none;
+    transition: none;
+  }
+
+  [data-scroll-reveal] > .container > .content > *,
+  [data-scroll-reveal].hero-section > * {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  [data-scroll-reveal]:not(.is-revealed) > .container > .content,
+  [data-scroll-reveal]:not(.is-revealed).hero-section > * {
+    pointer-events: auto;
+  }
+}
